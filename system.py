@@ -101,8 +101,8 @@ def start():
       console.writeline('reading ' + RAM.readTab('user_input') + '...\n\n' + filesystem.readFile(RAM.readTab('user_input')[4:]) + '\n')
     
     elif RAM.readTab('user_input')[:3] == 'run':
-      console.writeline('running ' + RAM.readTab('user_input') + '...\n\n')
-      exec.runFile(RAM.readTab('user_input'))
+      console.writeline('running ' + RAM.readTab('user_input')[4:] + '...\n\n')
+      RAM.writeTab('last_exec', exec.runFile(RAM.readTab('user_input')))
       
     elif RAM.readTab('user_input') == 'shutdown':
       HRAM.writeTab('system_restart', False)

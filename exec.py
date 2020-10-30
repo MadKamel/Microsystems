@@ -1,4 +1,11 @@
-import filesystem, console, system
+import filesystem, console, ram
 
 def runFile(filename):
-  console.writeline(system.RAM.readTab('user_input'))
+
+  E_RAM = ram.ram()
+
+  E_RAM.writeTab('file', filesystem.readFile(filename))
+  E_RAM.writeTab('type', filename.split('.')[1])
+  
+  console.writeline()
+  return E_RAM
