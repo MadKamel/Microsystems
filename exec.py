@@ -7,5 +7,15 @@ def runFile(filename):
   E_RAM.writeTab('file', filesystem.readFile(filename))
   E_RAM.writeTab('type', filename.split('.')[1])
   
-  console.writeline()
+  if E_RAM.readTab('type') == 'dyn':
+    E_RAM.writeTab('output', '')
+    E_RAM.writeTab('split', E_RAM.readTab('file').split('%'))
+    for i in range(len(E_RAM.readTab('split'))):
+      if i/2 != int(i/2):
+        # Is a command
+        pass
+      else:
+        E_RAM.writeTab('output', E_RAM.readTab('output') + (E_RAM.readTab('split')[i]))
+    console.writeline(E_RAM.readTab('output'))
+
   return E_RAM
