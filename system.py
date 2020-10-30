@@ -88,8 +88,12 @@ def start():
       
       for i in range(len(RAM.readTab('tmp00'))):
         console.writeline(RAM.readTab('tmp00')[i])
-      
+
       console.writeline('\n\nlisting complete\n')
+
+    elif RAM.readTab('user_input')[:3] == 'cat':
+      console.writeline('reading ' + RAM.readTab('user_input') + '\n\n' + filesystem.readFile(RAM.readTab('user_input')[4:]) + '\n')
+      
       
     elif RAM.readTab('user_input') == 'shutdown':
       HRAM.writeTab('system_restart', False)
