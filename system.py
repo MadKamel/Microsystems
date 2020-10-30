@@ -1,7 +1,7 @@
 import console, ram, rom, misc, filesystem
 
 HRAM = ram.ram()
-HROM = rom.rom({'user_list' : ['root', 'erustrum'], 'pass_list' : ['toor', 'password'], 'sudo_list' : [True, True]})
+HROM = rom.rom({'user_list' : ['root', 'ericr123'], 'pass_list' : ['toor', 'c7hu1u'], 'sudo_list' : [True, True]})
 
 HRAM.writeTab('host_name', 'microsystem')
 HRAM.writeTab('system_active', True)
@@ -82,17 +82,17 @@ def start():
     elif RAM.readTab('user_input') == 'clear':
       console.clear()
 
-    elif RAM.readTab('user_input') == 'listdir':
+    elif RAM.readTab('user_input') == 'ls':
       console.writeline('\nhere is the directory listing:')
       RAM.writeTab('tmp00', filesystem.listCWD())
       
       for i in range(len(RAM.readTab('tmp00'))):
-        console.writeline(RAM.readTab('tmp00')[i])
+        console.writeline('> ' + RAM.readTab('tmp00')[i])
 
       console.writeline('\n\nlisting complete\n')
 
     elif RAM.readTab('user_input')[:3] == 'cat':
-      console.writeline('reading ' + RAM.readTab('user_input') + '\n\n' + filesystem.readFile(RAM.readTab('user_input')[4:]) + '\n')
+      console.writeline('reading ' + RAM.readTab('user_input') + '...\n\n' + filesystem.readFile(RAM.readTab('user_input')[4:]) + '\n')
       
       
     elif RAM.readTab('user_input') == 'shutdown':
