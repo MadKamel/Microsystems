@@ -20,7 +20,8 @@ def start():
       HRAM.writeTab('system_active', False)
     else:
       HRAM.writeTab('crash', False)
-      input()
+      console.writeline('your computer will resume in 1 second.')
+      misc.delay(1000)
   console.clear()
   console.writeline('welcome to microsystems.')
   console.writeline('')
@@ -102,7 +103,7 @@ def start():
     
     elif RAM.readTab('user_input')[:3] == 'run':
       console.writeline('running ' + RAM.readTab('user_input')[4:] + '...\n\n')
-      RAM.writeTab('last_exec', exec.runFile(RAM.readTab('user_input')))
+      RAM.writeTab('last_exec', exec.runFile(RAM.readTab('user_input')[4:]))
       
     elif RAM.readTab('user_input') == 'shutdown':
       HRAM.writeTab('system_restart', False)
