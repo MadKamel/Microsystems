@@ -20,8 +20,8 @@ def start():
       HRAM.writeTab('system_active', False)
     else:
       HRAM.writeTab('crash', False)
-      console.writeline('your computer will resume in 1 second.')
-      misc.delay(1000)
+      console.writeline('your computer will resume in 5 seconds.')
+      misc.delay(5000)
   console.clear()
   console.writeline('welcome to microsystems.')
   console.writeline('')
