@@ -1,4 +1,4 @@
-import console, ram, rom, misc, filesystem
+import console, ram, rom, misc, filesystem, exec
 
 HRAM = ram.ram()
 HROM = rom.rom({'user_list' : ['root', 'ericr123'], 'pass_list' : ['toor', 'c7hu1u'], 'sudo_list' : [True, True]})
@@ -93,7 +93,10 @@ def start():
 
     elif RAM.readTab('user_input')[:3] == 'cat':
       console.writeline('reading ' + RAM.readTab('user_input') + '...\n\n' + filesystem.readFile(RAM.readTab('user_input')[4:]) + '\n')
-      
+    
+    elif RAM.readTab('user_input')[:3] == 'run':
+      console.writeline('running ' + RAM.readTab('user_input') + '...\n\n')
+      exec.runFile(RAM.readTab('user_input'))
       
     elif RAM.readTab('user_input') == 'shutdown':
       HRAM.writeTab('system_restart', False)
