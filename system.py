@@ -1,0 +1,110 @@
+import console, ram, rom, misc, filesystem
+
+HRAM = ram.ram()
+HROM = rom.rom({'user_list' : ['root', 'erustrum'], 'pass_list' : ['toor', 'password'], 'sudo_list' : [True, True]})
+
+HRAM.writeTab('host_name', 'microsystem')
+HRAM.writeTab('system_active', True)
+HRAM.writeTab('crash', False)
+HRAM.writeTab('system_restart', False)
+
+def start():
+  console.clear()
+  if HRAM.readTab('crash'):
+    console.writeline('your microsystem computer has crashed. here is some info.')
+    console.writeline(HRAM.readTab('crash_dump'))
+    if HRAM.readTab('crash_fatal'):
+      misc.delay(5000)
+      console.writeline('shutting down now...')
+      misc.delay(1000)
+      HRAM.writeTab('system_active', False)
+    else:
+      HRAM.writeTab('crash', False)
+      input()
+  console.clear()
+  console.writeline('welcome to microsystems.')
+  console.writeline('')
+  filesystem.changeCWD('home')
+
+  RAM = ram.ram()
+  RAM.purge()
+
+  RAM.writeTab('sudo_list', [False] + HROM.readTab('sudo_list'))
+  RAM.writeTab('user_list', ['guest'] + HROM.readTab('user_list'))
+  RAM.writeTab('pass_list', [''] + HROM.readTab('pass_list'))
+  RAM.writeTab('user_session_active', False)
+
+  while HRAM.readTab('system_active'):
+    if not(RAM.readTab('user_session_active')):
+      while not(RAM.readTab('user_session_active')):
+        console.writeline('please log in.')
+        RAM.writeTab('user_name', console.readline('  username: '))
+        RAM.writeTab('pass_word', console.readline('  password: '))
+        if RAM.readTab('user_name') in RAM.readTab('user_list') + HROM.readTab('user_list'):
+          if RAM.readTab('pass_word') == RAM.readTab('pass_list')[RAM.readTab('user_list').index(RAM.readTab('user_name'))]:
+            RAM.writeTab('user_session_active', True)
+            RAM.writeTab('user_is_sudo', RAM.readTab('sudo_list')[RAM.readTab('user_list').index(RAM.readTab('user_name'))])
+            console.clear()
+          else:
+            console.clear()
+            console.writeline('error: password incorrect.')
+            console.writeline('')
+        else:
+          console.clear()
+          console.writeline('error: invalid user.')
+          console.writeline('')
+
+
+    RAM.writeTab('user_input', console.readline(RAM.readTab('user_name') + '@' + HRAM.readTab('host_name') + ' ~ $ '))
+    if RAM.readTab('user_input') == '?':
+      console.writeline('')
+      console.writeline('  welcome to microsystem. below are some commands you can use to interact with the computer.')
+      console.writeline('')
+      console.writeline('    1: logout')
+      console.writeline('      * logs out the current user.')
+      console.writeline('')
+      console.writeline('    2: shutdown')
+      console.writeline('      * renders the computer inactive until it is restarted.')
+      console.writeline('')
+      console.writeline('    3: restart')
+      console.writeline('      * restarts the computer')
+      console.writeline('')
+      console.writeline('    4: clear')
+      console.writeline('      * clears the screen')
+      console.writeline('')
+      console.writeline('    5: listdir')
+      console.writeline('      * lists the current directory')
+      console.writeline('')
+    elif RAM.readTab('user_input') == 'restart':
+      HRAM.writeTab('system_restart', True)
+      HRAM.writeTab('system_active', False)
+
+    elif RAM.readTab('user_input') == 'clear':
+      console.clear()
+
+    elif RAM.readTab('user_input') == 'listdir':
+      console.writeline('\nhere is the directory listing:')
+      RAM.writeTab('tmp00', filesystem.listCWD())
+      
+      for i in range(len(RAM.readTab('tmp00'))):
+        console.writeline(RAM.readTab('tmp00')[i])
+      
+      console.writeline('\n\nlisting complete\n')
+      
+    elif RAM.readTab('user_input') == 'shutdown':
+      HRAM.writeTab('system_restart', False)
+      HRAM.writeTab('system_active', False)
+
+    elif RAM.readTab('user_input') == 'dumpram':
+      if RAM.readTab('user_is_sudo'):
+        console.writeline(RAM.dumpAll())
+      else:
+        console.writeline('\nyou are not a super-user.')
+
+    elif RAM.readTab('user_input') == 'logout':
+      RAM.writeTab('user_session_active', False)
+      console.clear()
+
+    elif RAM.readTab('user_input') == 'purgeram':
+      if RAM.readTab('user_is_sudo'):
+        console.writeline(RAM.purge())
