@@ -1,6 +1,6 @@
 import filesystem, console, ram
 
-def runFile(filename):
+def runFile(filename, RAM):
 
   E_RAM = ram.ram()
 
@@ -12,8 +12,8 @@ def runFile(filename):
     E_RAM.writeTab('split', E_RAM.readTab('file').split('%'))
     for i in range(len(E_RAM.readTab('split'))):
       if i/2 != int(i/2):
-        # Is a command
-        pass
+        if E_RAM.readTab('split')[i] == 'username':
+          E_RAM.writeTab('output', E_RAM.readTab('output') + (RAM.readTab('user_name')))
       else:
         E_RAM.writeTab('output', E_RAM.readTab('output') + (E_RAM.readTab('split')[i]))
     console.writeline(E_RAM.readTab('output'))
