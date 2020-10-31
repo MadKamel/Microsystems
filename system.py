@@ -57,8 +57,8 @@ def start():
 
 
     RAM.writeTab('user_input', console.readline(RAM.readTab('user_name') + '@' + HRAM.readTab('host_name') + ' ~ $ '))
-    
-    elif RAM.readTab('user_input') == 'restart':
+
+    if RAM.readTab('user_input') == 'restart':
       HRAM.writeTab('system_restart', True)
       HRAM.writeTab('system_active', False)
 
