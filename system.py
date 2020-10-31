@@ -57,31 +57,7 @@ def start():
 
 
     RAM.writeTab('user_input', console.readline(RAM.readTab('user_name') + '@' + HRAM.readTab('host_name') + ' ~ $ '))
-    if RAM.readTab('user_input') == '?':
-      console.writeline('')
-      console.writeline('  welcome to microsystem. below are some commands you can use to interact with the computer.')
-      console.writeline('')
-      console.writeline('    1: logout')
-      console.writeline('      * logs out the current user.')
-      console.writeline('')
-      console.writeline('    2: shutdown')
-      console.writeline('      * renders the computer inactive until it is restarted.')
-      console.writeline('')
-      console.writeline('    3: restart')
-      console.writeline('      * restarts the computer')
-      console.writeline('')
-      console.writeline('    4: clear')
-      console.writeline('      * clears the screen')
-      console.writeline('')
-      console.writeline('    5: ls')
-      console.writeline('      * lists the current directory')
-      console.writeline('')
-      console.writeline('    6: cat [filename]')
-      console.writeline('      * reads content of a file.')
-      console.writeline('')
-      console.writeline('    7: run [filename]')
-      console.writeline('      * executes a file, such as a DYN file.')
-      console.writeline('')
+    
     elif RAM.readTab('user_input') == 'restart':
       HRAM.writeTab('system_restart', True)
       HRAM.writeTab('system_active', False)
