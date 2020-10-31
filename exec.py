@@ -8,6 +8,8 @@ def runFile(filename, RAM):
   E_RAM.writeTab('type', filename.split('.')[1])
   
   if E_RAM.readTab('type') == 'dyn':
+    E_RAM.writeTab('write_on', True)
+    E_RAM.writeTab('tmp00', [''])
     E_RAM.writeTab('output', '')
     E_RAM.writeTab('split', E_RAM.readTab('file').split('%'))
     for i in range(len(E_RAM.readTab('split'))):
@@ -18,6 +20,11 @@ def runFile(filename, RAM):
           E_RAM.writeTab('output', E_RAM.readTab('output') + (RAM.readTab('user_is_sudo')))
       else:
         E_RAM.writeTab('output', E_RAM.readTab('output') + (E_RAM.readTab('split')[i]))
-    console.writeline(E_RAM.readTab('output'))
+    E_RAM.writeTab('split2', E_RAM.readTab('output').split('<'))
+    for i in range(len(E_RAM.readTab('split2'))):
+      E_RAM.writeTab('tmp00', E_RAM.readTab('tmp00').append(E_RAM.readTab('split2')[i].split('>')))
+      print(E_RAM.readTab('tmp00'))
+
+    console.writeline(E_RAM.readTab('output_final'))
 
   return E_RAM

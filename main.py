@@ -16,7 +16,7 @@ if __name__ == '__main__':
       system.HRAM.writeTab('crash_dump', 'KEY_ERROR:\n' + str(err))
       system.HRAM.writeTab('crash', True)
       system.HRAM.writeTab('crash_fatal', False)
-      
+
     except TypeError as err:
       system.HRAM.writeTab('crash_dump', 'TYPE_ERROR:\n' + str(err))
       system.HRAM.writeTab('crash', True)
@@ -26,6 +26,8 @@ if __name__ == '__main__':
       system.HRAM.writeTab('crash_dump', 'UNKNOWN_ERROR:\n' + str(err) + '\n\n\nthis could be a fatal error. your computer will shutdown now.')
       system.HRAM.writeTab('crash', True)
       system.HRAM.writeTab('crash_fatal', True)
+
+
 
   console.clear()
   exit()
