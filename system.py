@@ -75,7 +75,7 @@ def start():
       console.writeline('\n\nlisting complete\n')
 
     elif RAM.readTab('user_input')[:3] == 'cat':
-      console.writeline('reading ' + RAM.readTab('user_input') + '...\n\n' + filesystem.readFile(RAM.readTab('user_input')[4:]) + '\n')
+      console.writeline('reading ' + RAM.readTab('user_input')[4:] + '...\n\n' + filesystem.readFile(RAM.readTab('user_input')[4:]) + '\n')
     
     elif RAM.readTab('user_input')[:3] == 'run':
       console.writeline('running ' + RAM.readTab('user_input')[4:] + '...\n')
