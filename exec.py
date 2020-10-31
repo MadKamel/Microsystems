@@ -14,6 +14,8 @@ def runFile(filename, RAM):
       if i/2 != int(i/2):
         if E_RAM.readTab('split')[i] == 'username':
           E_RAM.writeTab('output', E_RAM.readTab('output') + (RAM.readTab('user_name')))
+        elif E_RAM.readTab('split')[i] == 'clear':
+          console.clear()
       else:
         E_RAM.writeTab('output', E_RAM.readTab('output') + (E_RAM.readTab('split')[i]))
     console.writeline(E_RAM.readTab('output') + '\n')
