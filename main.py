@@ -22,6 +22,12 @@ if __name__ == '__main__':
       system.HRAM.writeTab('crash', True)
       system.HRAM.writeTab('crash_fatal', False)
 
+    except FileNotFoundError as err:
+      system.HRAM.writeTab('crash_dump', 'FILE_NOT_FOUND_ERROR:\n' + str(err))
+      system.HRAM.writeTab('crash', True)
+      system.HRAM.writeTab('crash_fatal', False)
+
+
     except Exception as err:
       system.HRAM.writeTab('crash_dump', 'UNKNOWN_ERROR:\n' + str(err) + '\n\n\nthis could be a fatal error. your computer will shutdown now.')
       system.HRAM.writeTab('crash', True)
