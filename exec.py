@@ -18,6 +18,6 @@ def runFile(filename, RAM):
           console.clear()
       else:
         E_RAM.writeTab('output', E_RAM.readTab('output') + (E_RAM.readTab('split')[i]))
-    console.writeline(E_RAM.readTab('output') + '\n')
+    console.writeline(E_RAM.readTab('output'))
 
   return E_RAM
