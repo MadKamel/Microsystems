@@ -27,7 +27,7 @@ def start():
   console.clear()
   console.writeline('welcome to microsystems.')
   console.writeline('')
-  filesystem.changeCWD('home')
+  filesystem.changeCWD('/home/runner/Microsystems/home')
 
   RAM = ram.ram()
   RAM.purge()
