@@ -22,6 +22,13 @@ def runFile(filename, RAM):
         E_RAM.writeTab('output', E_RAM.readTab('output') + (E_RAM.readTab('split')[i]))
     E_RAM.writeTab('split2', re.split('<|>', E_RAM.readTab('output')))
     for i in range(len(E_RAM.readTab('split2'))):
-      console.writeline(E_RAM.readTab('split2')[i])
+      try:
+        E_RAM.writeTab('condParse', E_RAM.readTab(E_RAM.readTab('split2')[i]).split('='))
+        E_RAM.writeTab('write_on', E_RAM.writeTab('condParse')[0] == E_RAM.writeTab('condParse')[2])
+      except:
+        if E_RAM.readTab('write_on'):
+          console.writeline(E_RAM.readTab('split2')[i])
+
+
 
   return E_RAM
