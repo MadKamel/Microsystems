@@ -1,1 +1,11 @@
-Hello, <%username%=root>!
+Hello, %username%! You have found the help docs for your Microsystems computer!
+<0=1>
+
+Whoops! You forgot to RUN this file!
+To run the file, type "run help.dyn".
+When you run the file, it will change
+in order to accurately help you better.
+
+<1=1>To use your Microsystems machine, you must type in commands, such as "cat test.txt" or "run help.dyn".
+Below are some useful commands you can use to get the most out of your Microsystems computer:
+
