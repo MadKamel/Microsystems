@@ -22,10 +22,10 @@ def runFile(filename, RAM):
         E_RAM.writeTab('output', E_RAM.readTab('output') + (E_RAM.readTab('split')[i]))
     E_RAM.writeTab('split2', E_RAM.readTab('output').split('<'))
     for i in range(len(E_RAM.readTab('split2'))):
-      #E_RAM.writeTab('tmp00', E_RAM.readTab('tmp00').append(E_RAM.readTab('split2')[i].split('>')))
+      E_RAM.writeTab('split3', E_RAM.readTab('split2').split('>'))
       print(E_RAM.readTab('split2')[i])
       E_RAM.writeTab('tmp00', E_RAM.readTab('split2'[i].split('>')))
 
-    console.writeline(E_RAM.readTab('output_final'))
+    #console.writeline(E_RAM.readTab('output_final'))
 
   return E_RAM
