@@ -9,8 +9,8 @@ def runFile(filename, RAM):
   
   if E_RAM.readTab('type') == 'dyn':
     E_RAM.writeTab('write_on', True)
-    E_RAM.writeTab('tmp00', [''])
     E_RAM.writeTab('output', '')
+    E_RAM.writeTab('output2', '')
     E_RAM.writeTab('split', E_RAM.readTab('file').split('%'))
     for i in range(len(E_RAM.readTab('split'))):
       if i/2 != int(i/2):
@@ -22,13 +22,18 @@ def runFile(filename, RAM):
         E_RAM.writeTab('output', E_RAM.readTab('output') + (E_RAM.readTab('split')[i]))
     E_RAM.writeTab('split2', re.split('<|>', E_RAM.readTab('output')))
     for i in range(len(E_RAM.readTab('split2'))):
-      try:
-        E_RAM.writeTab('condParse', E_RAM.readTab(E_RAM.readTab('split2')[i]).split('='))
-        E_RAM.writeTab('write_on', E_RAM.writeTab('condParse')[0] == E_RAM.writeTab('condParse')[2])
-      except:
+      console.writeline(E_RAM.readTab('split2'))
+      if i/2 != int(i/2):
+        E_RAM.writeTab('condParse', E_RAM.readTab('split2')[i].split('='))
+        if E_RAM.readTab('condParse')[0] == E_RAM.readTab('condParse')[2]:
+          E_RAM.writeTab('write_on', True)
+        else:
+          E_RAM.writeTab('write_on', False)
+          
+      else:
         if E_RAM.readTab('write_on'):
-          console.writeline(E_RAM.readTab('split2')[i])
+          E_RAM.writeTab('output2', E_RAM.readTab('output2') + E_RAM.readTab('split2')[i])
 
-
-
+      
+    console.writeline(E_RAM.readTab('output2'))
   return E_RAM
