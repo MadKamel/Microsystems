@@ -1,0 +1,50 @@
+Hello, %username%! You have found the help file for your personal microsystems computer!
+<0=1>
+
+  Whoops! You forgot to type "run help.dyn" in your command line! This document will change accordingly to suit your needs when run properly.
+  
+<1=1>To use your microsystems computer, you must type in what you want it to do. Here are some commands you can use:
+
+  * cat [filename]
+    This command will show you the contents of a file.
+  
+  * run [filename]
+    This command will run a file, such as a .dyn file.
+    
+  * ls
+    This command will show you what files are in your current directory.
+    
+  * logout
+    This command will log you out of your current user session.
+    
+  * clear
+    This command will clear your screen of text.
+    
+  * shutdown
+    This command turns off your system.
+    
+  * restart
+    This command will re-start your system after temporarily shutting down.
+    
+<%issudo%=True>
+As a super-user, your account can do much more than what was previously listed. Here are some examples:
+
+  * dumpram
+    Shows you every active tab of RAM and it's contents.
+    
+  * purgeram
+    [!WARNING!] Erases all active RAM tabs. This command is dangerous because it can cause a flow mutation.
+    
+<1=1>Now that you are familiar with your system's commands, here are some words that refer to how your computer works:
+
+  * flow mutation
+    When RAM tries to read a tab that does not exist, it is called a 'flow mutation'.
+    
+  * crash
+    When a known error occurs, a crash is called Normal crashes will reboot your computer in order to flush RAM in a safe manner.
+    
+  * fatal crash
+    When an unknown error occurs, a fatal crash is called. This type of crash will shut down your system to protect data integrity.
+    
+    
+Thank you for using your Microsystems Computer!
