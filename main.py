@@ -16,13 +16,13 @@ if __name__ == '__main__':
       system.HRAM.writeTab('crash_dump', 'KEY_ERROR:\n' + str(err))
       system.HRAM.writeTab('crash', True)
       system.HRAM.writeTab('crash_fatal', False)
-      traceback.print_exc(file=open('home/dump00.dmp'))
+      traceback.print_exc(file=open(system.HROM.readTab('dumpfile')))
       
     except TypeError as err:
       system.HRAM.writeTab('crash_dump', 'TYPE_ERROR:\n' + str(err))
       system.HRAM.writeTab('crash', True)
       system.HRAM.writeTab('crash_fatal', False)
-      traceback.print_exc(file=open('home/dump00.dmp'))
+      traceback.print_exc(file=open(system.HROM.readTab('dumpfile')))
 
 
     except FileNotFoundError as err:
