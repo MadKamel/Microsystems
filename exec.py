@@ -15,9 +15,9 @@ def runFile(filename, RAM):
     for i in range(len(E_RAM.readTab('split'))):
       if i/2 != int(i/2):
         if E_RAM.readTab('split')[i] == 'username':
-          E_RAM.writeTab('output', E_RAM.readTab('output') + (RAM.readTab('user_name')))
+          E_RAM.writeTab('output', E_RAM.readTab('output') + RAM.readTab('user_name'))
         elif E_RAM.readTab('split')[i] == 'issudo':
-          E_RAM.writeTab('output', E_RAM.readTab('output') + (RAM.readTab('user_is_sudo')))
+          E_RAM.writeTab('output', E_RAM.readTab('output') + str(RAM.readTab('user_is_sudo')))
       else:
         E_RAM.writeTab('output', E_RAM.readTab('output') + (E_RAM.readTab('split')[i]))
     E_RAM.writeTab('split2', re.split('<|>', E_RAM.readTab('output')))
@@ -31,7 +31,7 @@ def runFile(filename, RAM):
 
       else:
         if E_RAM.readTab('write_on'):
-          E_RAM.writeTab('output2', E_RAM.readTab('output2') + E_RAM.readTab('split2')[i])
+          E_RAM.writeTab('output2', E_RAM.readTab('output2') + str(E_RAM.readTab('split2')[i]))
 
       
     console.writeline(E_RAM.readTab('output2'))

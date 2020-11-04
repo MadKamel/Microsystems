@@ -1,4 +1,4 @@
-import system, console
+import system, console, traceback
 
 if __name__ == '__main__':
 
@@ -16,11 +16,14 @@ if __name__ == '__main__':
       system.HRAM.writeTab('crash_dump', 'KEY_ERROR:\n' + str(err))
       system.HRAM.writeTab('crash', True)
       system.HRAM.writeTab('crash_fatal', False)
+      traceback.print_exc(file='home/dump00.dmp')
       
     except TypeError as err:
       system.HRAM.writeTab('crash_dump', 'TYPE_ERROR:\n' + str(err))
       system.HRAM.writeTab('crash', True)
       system.HRAM.writeTab('crash_fatal', False)
+      traceback.print_exc(file='home/dump00.dmp')
+
 
     except FileNotFoundError as err:
       system.HRAM.writeTab('crash_dump', 'FILE_NOT_FOUND_ERROR:\n' + str(err))
