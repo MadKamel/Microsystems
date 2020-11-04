@@ -101,3 +101,5 @@ def start():
     elif RAM.readTab('user_input') == 'purgeram':
       if RAM.readTab('user_is_sudo'):
         console.writeline(RAM.purge())
+      else:
+        console.writeline('\nyou are not a super-user.')
