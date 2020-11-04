@@ -1,4 +1,4 @@
-import os
+import os, system
 
 def listCWD():
   return os.listdir()
@@ -15,5 +15,5 @@ def readFile(file):
 def overwriteFile(file, data):
   open(file, '+w').write(data)
 
-def dumpError(file, data):
-  overwriteFile(file, str(data))
+def dumpError(data):
+  overwriteFile(system.HROM('dumpfile') str(data))
