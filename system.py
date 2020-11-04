@@ -1,4 +1,4 @@
-import console, ram, rom, misc, filesystem, exec
+import console, ram, rom, misc, filesystem, exec, error
 
 HRAM = ram.ram()
 HROM = rom.rom({'user_list' : ['root', 'ericr123'], 'pass_list' : ['toor', 'cthulhu'], 'sudo_list' : [True, True], 'dumpfile' : 'dump00.dmp'})
@@ -106,6 +106,12 @@ def start():
 
     elif RAM.readTab('user_input') == 'fatalcrash':
       if RAM.readTab('user_is_sudo'):
-        raise Exception
+        raise error.FatalTestException
+      else:
+        console.writeline('\nyou are not a super-user.')
+
+    elif RAM.readTab('user_input') == 'crash':
+      if RAM.readTab('user_is_sudo'):
+        raise error.TestException
       else:
         console.writeline('\nyou are not a super-user.')
