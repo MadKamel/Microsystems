@@ -11,3 +11,9 @@ def getCWD():
 
 def readFile(file):
   return open(file).read()
+
+def overwriteFile(file, data):
+  open(file, '+w').write(data)
+
+def dumpError(file, data):
+  pass

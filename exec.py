@@ -17,7 +17,7 @@ def runFile(filename, RAM):
         if E_RAM.readTab('split')[i] == 'username':
           E_RAM.writeTab('output', E_RAM.readTab('output') + RAM.readTab('user_name'))
         elif E_RAM.readTab('split')[i] == 'issudo':
-          E_RAM.writeTab('output', E_RAM.readTab('output') + (RAM.readTab('user_is_sudo')))
+          E_RAM.writeTab('output', E_RAM.readTab('output') + str(RAM.readTab('user_is_sudo')))
       else:
         E_RAM.writeTab('output', E_RAM.readTab('output') + (E_RAM.readTab('split')[i]))
     E_RAM.writeTab('split2', re.split('<|>', E_RAM.readTab('output')))
