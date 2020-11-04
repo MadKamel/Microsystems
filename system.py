@@ -1,7 +1,7 @@
-import console, ram, rom, misc, filesystem, exec, error
+import console, ram, rom, misc, filesystem, exec, error, re
 
 HRAM = ram.ram()
-HROM = rom.rom({'user_list' : ['root', 'eric'], 'pass_list' : ['toor', 'cthulhu'], 'sudo_list' : [True, True], 'dumpfile' : 'dump00.dmp'})
+HROM = rom.rom({'user_list' : ['root'], 'pass_list' : ['toor'], 'sudo_list' : [True], 'dumpfile' : 'dump00.dmp', 'use_regexp' : ',', 'usefile' : 'users.use'})
 
 
 HRAM.writeTab('host_name', 'microsystem')
@@ -33,9 +33,10 @@ def start():
   RAM = ram.ram()
   RAM.purge()
 
-  RAM.writeTab('sudo_list', [False] + HROM.readTab('sudo_list'))
-  RAM.writeTab('user_list', ['guest'] + HROM.readTab('user_list'))
-  RAM.writeTab('pass_list', [''] + HROM.readTab('pass_list'))
+  RAM.writeTab('usefile_content', open(HROM.readTab('usefile')).read().split('\n'))
+  RAM.writeTab('sudo_list', re.split(HROM.readTab('use_regexp'), RAM.readTab('usefile_content')[0]) + HROM.readTab('sudo_list'))
+  RAM.writeTab('user_list', re.split(HROM.readTab('use_regexp'), RAM.readTab('usefile_content')[1]) + HROM.readTab('user_list'))
+  RAM.writeTab('pass_list', re.split(HROM.readTab('use_regexp'), RAM.readTab('usefile_content')[2]) + HROM.readTab('pass_list'))
   RAM.writeTab('user_session_active', False)
 
   while HRAM.readTab('system_active'):

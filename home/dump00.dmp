@@ -1,1 +1,1 @@
-(<class 'error.FatalTestException'>, FatalTestException(), <traceback object at 0x7fd8e9fe0600>)
+(<class 'IndexError'>, IndexError('list index out of range'), <traceback object at 0x7f2e644a5e00>)
