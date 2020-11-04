@@ -12,7 +12,6 @@ Hello, %username%! You have found the help file for your personal microsystems c
   * clear    
   * shutdown
   * restart
-    
 <%issudo%=True>
 As a super-user, your account can do much more than what was previously listed. Here are some examples:
 
@@ -23,5 +22,6 @@ As a super-user, your account can do much more than what was previously listed. 
   * purgeram
   * fatalcrash
   * crash
+  * lastdump
     
 Thank you for using your Microsystems Computer!

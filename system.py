@@ -1,7 +1,7 @@
 import console, ram, rom, misc, filesystem, exec, error, re
 
 HRAM = ram.ram()
-HROM = rom.rom({'user_list' : ['root'], 'pass_list' : ['toor'], 'sudo_list' : [True], 'dumpfile' : 'dump00.dmp', 'use_regexp' : ',', 'usefile' : 'users.use'})
+HROM = rom.rom({'user_list' : ['root'], 'pass_list' : ['toor'], 'sudo_list' : [True], 'dumpfile' : 'dump00.dmp', 'use_regexp' : ',', 'usefile' : 'users.use', 'rootdir' : filesystem.getCWD()})
 
 
 HRAM.writeTab('host_name', 'microsystem')
@@ -28,7 +28,9 @@ def start():
   console.clear()
   console.writeline('welcome to microsystems.')
   console.writeline('')
-  filesystem.changeCWD('/home/runner/Microsystems/home')
+
+  filesystem.changeCWD(HROM.readTab('rootdir') + '/home/')
+
 
   RAM = ram.ram()
   RAM.purge()
@@ -135,5 +137,11 @@ def start():
     elif RAM.readTab('user_input') == 'crash':
       if RAM.readTab('user_is_sudo'):
         raise error.TestException
+      else:
+        console.writeline('\nyou are not a super-user.')
+
+    elif RAM.readTab('user_input') == 'lastdump':
+      if RAM.readTab('user_is_sudo'):
+        console.writeline(open(HROM.readTab('dumpfile')).read())
       else:
         console.writeline('\nyou are not a super-user.')
