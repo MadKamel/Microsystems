@@ -16,4 +16,4 @@ def overwriteFile(file, data):
   open(file, '+w').write(data)
 
 def dumpError(data):
-  overwriteFile(system.HROM('dumpfile') str(data))
+  overwriteFile(system.HROM('dumpfile'), str(data))
