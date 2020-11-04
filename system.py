@@ -103,3 +103,9 @@ def start():
         console.writeline(RAM.purge())
       else:
         console.writeline('\nyou are not a super-user.')
+
+    elif RAM.readTab('user_input') == 'fatalcrash':
+      if RAM.readTab('user_is_sudo'):
+        raise Exception
+      else:
+        console.writeline('\nyou are not a super-user.')
