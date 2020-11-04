@@ -50,7 +50,7 @@ def start():
         if RAM.readTab('user_name') in RAM.readTab('user_list') + HROM.readTab('user_list'):
           if RAM.readTab('pass_word') == RAM.readTab('pass_list')[RAM.readTab('user_list').index(RAM.readTab('user_name'))]:
             RAM.writeTab('user_session_active', True)
-            RAM.writeTab('user_is_sudo', RAM.readTab('sudo_list')[RAM.readTab('user_list').index(RAM.readTab('user_name'))])
+            RAM.writeTab('user_is_sudo', 'True' == RAM.readTab('sudo_list')[RAM.readTab('user_list').index(RAM.readTab('user_name'))])
             console.clear()
           else:
             console.clear()
