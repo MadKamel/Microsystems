@@ -35,4 +35,10 @@ def runFile(filename, RAM):
 
       
     console.writeline(E_RAM.readTab('output2'))
+    E_RAM.writeTab('output2', '[EXPUNGED]')
+    E_RAM.writeTab('output', '[EXPUNGED]')
+    E_RAM.writeTab('split', '[EXPUNGED]')
+    E_RAM.writeTab('split2', '[EXPUNGED]')
+    E_RAM.writeTab('file', '[EXPUNGED]')
+
   return E_RAM

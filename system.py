@@ -95,6 +95,27 @@ def start():
       else:
         console.writeline('\nyou are not a super-user.')
 
+    elif RAM.readTab('user_input') == 'dumphrom':
+      if RAM.readTab('user_is_sudo'):
+        console.writeline(HROM.dumpAll())
+      else:
+        console.writeline('\nyou are not a super-user.')
+
+    elif RAM.readTab('user_input') == 'dumphram':
+      if RAM.readTab('user_is_sudo'):
+        console.writeline(HRAM.dumpAll())
+      else:
+        console.writeline('\nyou are not a super-user.')
+
+    elif RAM.readTab('user_input') == 'dumperam':
+      if RAM.readTab('user_is_sudo'):
+        try:
+          console.writeline(RAM.readTab('last_exec').dumpAll())
+        except:
+          pass
+      else:
+        console.writeline('\nyou are not a super-user.')
+
     elif RAM.readTab('user_input') == 'logout':
       RAM.writeTab('user_session_active', False)
       console.clear()
