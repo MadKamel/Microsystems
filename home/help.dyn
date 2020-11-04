@@ -16,7 +16,10 @@ Hello, %username%! You have found the help file for your personal microsystems c
 <%issudo%=True>
 As a super-user, your account can do much more than what was previously listed. Here are some examples:
 
-  * dumpram    
+  * dumpram
+  * dumperam
+  * dumphram
+  * dumphrom 
   * purgeram
   * fatalcrash
   * crash
