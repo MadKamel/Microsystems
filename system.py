@@ -1,7 +1,7 @@
 import console, ram, rom, misc, filesystem, exec, error, re
 
 HRAM = ram.ram()
-HROM = rom.rom({'user_list' : ['root'], 'pass_list' : ['toor'], 'sudo_list' : [True], 'dumpfile' : 'dump00.dmp', 'use_regexp' : ',', 'usefile' : 'users.use', 'rootdir' : filesystem.getCWD()})
+HROM = rom.rom({'user_list' : ['root'], 'pass_list' : ['toor'], 'sudo_list' : ['True'], 'dumpfile' : 'dump00.dmp', 'use_regexp' : ',', 'usefile' : 'users.use', 'rootdir' : filesystem.getCWD()})
 
 
 HRAM.writeTab('host_name', 'microsystem')
