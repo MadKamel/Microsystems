@@ -99,6 +99,7 @@ def start():
                       sent_command = ' '.join(fullmsg.split(' ')[2:])
                       RAM.writeTab('failed_msg', sent_command)
                       RAM.writeTab('failed_rqst', True)
+
             except Exception as e:
               console.writeline('\n\nIRC daemon died!')
               filesystem.dumpError(sys.exc_info())
@@ -154,7 +155,7 @@ def start():
         timer_start = time.time()
         while timer_start - time.time() > -1:
           if '' != RAM.readTab('response'):
-            console.writeline(RAM.readTab('response'))
+            console.writeline('got a response!')
             break
           
           elif RAM.readTab('failed_rqst'):

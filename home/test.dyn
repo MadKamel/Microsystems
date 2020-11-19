@@ -1,1 +1,0 @@
-This is a test of the MC-COMMS IRC network requesting system.\n<0=1> This line won't show when running this dyn file.\n<1=1> This line will show when reading this plain file.\n\n<%issudo%=True>\nIf you are sudo, you can read this.\n<1=1> File test over.
