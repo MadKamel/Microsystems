@@ -17,4 +17,5 @@ def encode_file(file):
   return msg_proc
 
 def decode_file(file, data):
-  pass
+  wker = base64.b64decode(data).decode('utf-8')
+  open(file, 'w+').write(wker)
