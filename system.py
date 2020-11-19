@@ -1,7 +1,7 @@
-import console, ram, rom, misc, filesystem, exec, error, re
+import console, ram, rom, misc, filesystem, exec, error, re, irc, comms, time, threading
 
 HRAM = ram.ram()
-HROM = rom.rom({'user_list' : ['root'], 'pass_list' : ['toor'], 'sudo_list' : ['True'], 'dumpfile' : 'dump00.dmp', 'use_regexp' : ',', 'usefile' : 'users.use', 'rootdir' : filesystem.getCWD()})
+HROM = rom.rom({'user_list' : ['root'], 'pass_list' : ['toor'], 'sudo_list' : ['True'], 'dumpfile' : 'dump00.dmp', 'use_regexp' : ',', 'usefile' : 'users.use', 'rootdir' : filesystem.getCWD(), 'server' : 'irc.freenode.net', 'channel' : '#mk-comms', 'inbox_dest' : 'inbox.box'})
 
 
 HRAM.writeTab('host_name', 'microsystem')
@@ -26,6 +26,9 @@ def start():
       console.writeline('resuming your computer')
       misc.delay(1000)
   console.clear()
+
+  
+
   console.writeline('welcome to microsystems.')
   console.writeline('')
 
@@ -34,6 +37,7 @@ def start():
 
   RAM = ram.ram()
   RAM.purge()
+  
 
   RAM.writeTab('usefile_content', open(HROM.readTab('usefile')).read().split('\n'))
   RAM.writeTab('sudo_list', re.split(HROM.readTab('use_regexp'), RAM.readTab('usefile_content')[0]) + HROM.readTab('sudo_list'))
@@ -57,6 +61,42 @@ def start():
             console.clear()
             console.writeline('error: password incorrect.')
             console.writeline('')
+
+          client = irc.IRC()
+          RAM.writeTab('irc_name', RAM.readTab('user_name') + '-' + HRAM.readTab('host_name'))
+          client.connect(HROM.readTab('server'), HROM.readTab('channel'), RAM.readTab('irc_name'))
+          console.writeline('starting IRC listening daemon...')
+          
+          def ircListener(client):
+            console.writeline('IRC listening daemon active.')
+            while True:
+              cmd, user, fullmsg = comms.parsecmd(client.get_text())
+              if not cmd == None:
+                if cmd == 'ping':
+                  client.send('pong')
+
+                elif cmd == 'pong':
+                  RAM.writeTab('ponged', user)
+                
+                elif cmd == 'send':
+                  if fullmsg.split(' ')[1] == RAM.readTab('irc_name'):
+                    sent_command = ' '.join(fullmsg.split(' ')[2:])
+                    filesystem.appendFile(HROM.readTab('inbox_dest'), '[' + user + '] sent: ' + sent_command + '\n')
+
+                elif cmd == 'give':
+                  if fullmsg.split(' ')[1] == RAM.readTab('irc_name'):
+                    sent_command = ' '.join(fullmsg.split(' ')[2:])
+                    if sent_command == 'ack':
+                      RAM.writeTab('ack', True)
+                    else:
+                      RAM.writeTab('response', sent_command)
+
+          ircListeningDaemon = threading.Thread(target=ircListener, args=([client]), daemon=True)
+          ircListeningDaemon.start()
+
+          console.writeline('IRC listening daemon set up.')
+
+          console.writeline('microsystems MK-COMMS system set up.\n')
         else:
           console.clear()
           console.writeline('error: invalid user.')
@@ -68,6 +108,43 @@ def start():
     if RAM.readTab('user_input') == 'restart':
       HRAM.writeTab('system_restart', True)
       HRAM.writeTab('system_active', False)
+
+    elif RAM.readTab('user_input') == 'mk-ping':
+      RAM.writeTab('ponged', '')
+      client.send('ping')
+      console.writeline('ping sent; listening for reply.')
+
+      timer_start = time.time()
+      while timer_start - time.time() > -1:
+        if RAM.readTab('ponged') != '':
+          console.writeline('user [' + RAM.readTab('ponged') + '] ponged.')
+          RAM.writeTab('ponged', '')
+
+      console.writeline('ping complete.\n')
+    
+    elif RAM.readTab('user_input').split(' ')[0] == 'mk-rqst':
+      RAM.writeTab('ack', False)
+      client.send('rqst ' + RAM.readTab('user_input').split(' ')[1] + ' ack')
+      console.writeline('sending ack request..')
+      timer_start = time.time()
+      while timer_start - time.time() > -1:
+        if RAM.readTab('ack'):
+          break
+      
+      if RAM.readTab('ack'):
+        console.writeline('ack request answered, continuing.')
+        RAM.writeTab('response', '')
+        client.send('rqst ' + RAM.readTab('user_input').split(' ')[1] + ' ' + ' '.join(RAM.readTab('user_input').split(' ')[2:]))
+        timer_start = time.time()
+        while timer_start - time.time() > -1:
+          if '' != RAM.readTab('response'):
+            console.writeline(RAM.readTab('response'))
+
+      else:
+        console.writeline('ack request ignored, aborting.')
+        continue
+
+
 
     elif RAM.readTab('user_input') == 'clear':
       console.clear()

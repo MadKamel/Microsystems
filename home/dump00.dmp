@@ -1,1 +1,1 @@
-(<class 'error.FatalTestException'>, FatalTestException(), <traceback object at 0x7f47cc8f4d00>)
+(<class 'TypeError'>, TypeError('can only concatenate str (not "NoneType") to str'), <traceback object at 0x7fd2c4364180>)

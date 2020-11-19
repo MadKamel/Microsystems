@@ -15,5 +15,8 @@ def readFile(file):
 def overwriteFile(file, data):
   open(file, '+w').write(data)
 
+def appendFile(file, data):
+  open(file, '+a').write(data)
+
 def dumpError(data):
   overwriteFile(system.HROM.readTab('dumpfile'), str(data))
