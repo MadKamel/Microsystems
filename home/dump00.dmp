@@ -1,1 +1,1 @@
-(<class 'NameError'>, NameError("name 'REAM' is not defined"), <traceback object at 0x7fe4b42bdfc0>)
+(<class 'error.TestException'>, TestException(), <traceback object at 0x7fec8a154640>)
