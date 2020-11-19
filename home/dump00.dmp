@@ -1,1 +1,1 @@
-(<class 'error.TestException'>, TestException(), <traceback object at 0x7fec8a154640>)
+(<class 'error.FatalTestException'>, FatalTestException(), <traceback object at 0x7f47cc8f4d00>)
