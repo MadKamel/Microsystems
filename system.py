@@ -1,4 +1,4 @@
-import console, ram, rom, misc, filesystem, exec, error, re, irc, comms, time, threading
+import console, ram, rom, misc, filesystem, exec, error, re, irc, comms, time, threading, sys
 
 HRAM = ram.ram()
 HROM = rom.rom({'user_list' : ['root'], 'pass_list' : ['toor'], 'sudo_list' : ['True'], 'dumpfile' : 'dump00.dmp', 'use_regexp' : ',', 'usefile' : 'users.use', 'rootdir' : filesystem.getCWD(), 'server' : 'irc.freenode.net', 'channel' : '#mk-comms', 'inbox_dest' : 'inbox.box'})
@@ -68,36 +68,43 @@ def start():
           console.writeline('starting IRC listening daemon...')
           
           def ircListener(client):
-            console.writeline('IRC listening daemon active.')
-            while True:
-              cmd, user, fullmsg = comms.parsecmd(client.get_text())
-              if not cmd == None:
-                if cmd == 'ping':
-                  client.send('pong')
+            try:
+              console.writeline('IRC listening daemon active.')
+              while True:
+                cmd, user, fullmsg = comms.parsecmd(client.get_text())
+                if not cmd == None:
+                  if cmd == 'ping':
+                    client.send('pong')
 
-                elif cmd == 'pong':
-                  RAM.writeTab('ponged', user)
+                  elif cmd == 'pong':
+                    RAM.writeTab('ponged', user)
                 
-                elif cmd == 'send':
-                  if fullmsg.split(' ')[1] == RAM.readTab('irc_name'):
-                    sent_command = ' '.join(fullmsg.split(' ')[2:])
-                    filesystem.appendFile(HROM.readTab('inbox_dest'), '[' + user + '] sent: ' + sent_command + '\n')
+                  elif cmd == 'send':
+                    if fullmsg.split(' ')[1] == RAM.readTab('irc_name'):
+                      sent_command = ' '.join(fullmsg.split(' ')[2:])
+                      filesystem.appendFile(HROM.readTab('inbox_dest'), '[' + user + '] sent: ' + sent_command + '\n')
 
-                elif cmd == 'give':
-                  if fullmsg.split(' ')[1] == RAM.readTab('irc_name'):
-                    sent_command = ' '.join(fullmsg.split(' ')[2:])
-                    if sent_command == 'ack':
-                      RAM.writeTab('ack', True)
-                    else:
-                      RAM.writeTab('response', sent_command)
-                      if sent_command.split(' ')[0] == 'file':
-                        comms.decode_file(sent_command.split(' ')[1], ' '.join(sent_command.split(' ')[2:]))
+                  elif cmd == 'give':
+                    if fullmsg.split(' ')[1] == RAM.readTab('irc_name'):
+                      sent_command = ' '.join(fullmsg.split(' ')[2:])
+                      if sent_command == 'ack':
+                        RAM.writeTab('ack', True)
+                      else:
+                        RAM.writeTab('response', sent_command)
+                        if sent_command.split(' ')[0] == 'file':
+                          comms.decode_file(sent_command.split(' ')[1], ' '.join(sent_command.split(' ')[2:]))
                 
-                elif cmd == 'fail':
-                  if fullmsg.split(' ')[1] == RAM.readTab('irc_name'):
-                    sent_command = ' '.join(fullmsg.split(' ')[2:])
-                    RAM.writeTab('failed_msg', sent_command)
-                    RAM.writeTab('failed_rqst', True)
+                  elif cmd == 'fail':
+                    if fullmsg.split(' ')[1] == RAM.readTab('irc_name'):
+                      sent_command = ' '.join(fullmsg.split(' ')[2:])
+                      RAM.writeTab('failed_msg', sent_command)
+                      RAM.writeTab('failed_rqst', True)
+            except Exception as e:
+              console.writeline('\n\nIRC daemon died!')
+              filesystem.dumpError(sys.exc_info())
+              console.writeline(str(e) + '\n')
+              #ircListeningDaemon = threading.Thread(target=ircListener, args=([client]), daemon=True)
+              #ircListeningDaemon.start()
 
           ircListeningDaemon = threading.Thread(target=ircListener, args=([client]), daemon=True)
           ircListeningDaemon.start()

@@ -1,1 +1,2 @@
-(<class 'TypeError'>, TypeError('can only concatenate str (not "NoneType") to str'), <traceback object at 0x7fd2c4364180>)
+(<class 'TypeError'>, TypeError("a bytes-like object is required, not 'str'"), <traceback object at 0x7fa4336eb640>)
+[<FrameSummary file /home/runner/Microsystems/system.py, line 95 in ircListener>, <FrameSummary file /home/runner/Microsystems/comms.py, line 18 in decode_file>]

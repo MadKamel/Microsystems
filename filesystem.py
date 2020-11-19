@@ -1,4 +1,4 @@
-import os, system
+import os, system, traceback
 
 def listCWD():
   return os.listdir()
@@ -19,4 +19,4 @@ def appendFile(file, data):
   open(file, '+a').write(data)
 
 def dumpError(data):
-  overwriteFile(system.HROM.readTab('dumpfile'), str(data))
+  overwriteFile(system.HROM.readTab('dumpfile'), str(data) + '\n' + str(traceback.extract_tb(data[2])))
