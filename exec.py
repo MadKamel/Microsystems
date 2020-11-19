@@ -6,6 +6,8 @@ def runFile(filename, RAM):
 
   E_RAM.writeTab('file', filesystem.readFile(filename))
   E_RAM.writeTab('type', filename.split('.')[1])
+  if E_RAM.readTab('file')[0] == '@':
+    console.clear()
   
   if E_RAM.readTab('type') == 'dyn':
     E_RAM.writeTab('write_on', True)
