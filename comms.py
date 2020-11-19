@@ -15,4 +15,4 @@ def encode_file(file):
 
 def decode_file(file, data):
   wker = base64.b64decode(data).decode('utf-8')
-  open(file, 'w').write(wker)
+  open(file, 'w+').write(wker)

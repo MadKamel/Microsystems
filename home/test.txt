@@ -1,1 +1,0 @@
-Hello, user! This is a static text file!

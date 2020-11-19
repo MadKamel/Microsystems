@@ -18,6 +18,12 @@ if __name__ == '__main__':
       system.HRAM.writeTab('crash_fatal', False)
       filesystem.dumpError(sys.exc_info())
 
+    except IOError as err:
+      system.HRAM.writeTab('crash_dump', 'IO_ERROR:\n' + str(err))
+      system.HRAM.writeTab('crash', True)
+      system.HRAM.writeTab('crash_fatal', False)
+      filesystem.dumpError(sys.exc_info())
+
     except TypeError as err:
       system.HRAM.writeTab('crash_dump', 'TYPE_ERROR:\n' + str(err))
       system.HRAM.writeTab('crash', True)

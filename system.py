@@ -1,7 +1,7 @@
 import console, ram, rom, misc, filesystem, exec, error, re, irc, comms, time, threading, sys
 
 HRAM = ram.ram()
-HROM = rom.rom({'user_list' : ['root'], 'pass_list' : ['toor'], 'sudo_list' : ['True'], 'dumpfile' : 'dump00.dmp', 'use_regexp' : ',', 'usefile' : 'users.use', 'rootdir' : filesystem.getCWD(), 'server' : 'irc.freenode.net', 'channel' : '#mk-comms', 'inbox_dest' : 'inbox.box'})
+HROM = rom.rom({'user_list' : ['root'], 'pass_list' : ['toor'], 'sudo_list' : ['True'], 'dumpfile' : 'sys/dump00.dmp', 'use_regexp' : ',', 'usefile' : 'sys/users.use', 'rootdir' : filesystem.getCWD(), 'server' : 'irc.freenode.net', 'channel' : '#mk-comms', 'inbox_dest' : 'sys/inbox.box'})
 
 
 HRAM.writeTab('host_name', 'microsystem')
