@@ -20,3 +20,10 @@ def appendFile(file, data):
 
 def dumpError(data):
   overwriteFile(system.HROM.readTab('dumpfile'), str(data) + '\n' + str(traceback.extract_tb(data[2])))
+
+def removeFile(path):
+  if os.path.exists(path):
+    os.remove(path)
+    return True
+  else:
+    return False

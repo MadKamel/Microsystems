@@ -172,6 +172,12 @@ def start():
     elif RAM.readTab('user_input') == 'clear':
       console.clear()
 
+    elif RAM.readTab('user_input').split(' ')[0] == 'del':
+      if filesystem.removeFile(RAM.readTab('user_input').split(' ')[1]):
+        console.writeline('file deleted successfully.')
+      else:
+        console.writeline('"' + RAM.readTab('user_input').split(' ')[1] + '" is not a valid file.')
+
     elif RAM.readTab('user_input') == 'ls':
       console.writeline('\nhere is the directory listing:')
       RAM.writeTab('tmp00', filesystem.listCWD())
