@@ -90,6 +90,14 @@ def start():
                       RAM.writeTab('ack', True)
                     else:
                       RAM.writeTab('response', sent_command)
+                      if sent_command.split(' ')[0] == 'file':
+                        comms.decode_file(sent_command.split(' ')[1], ' '.join(sent_command.split(' ')[2:]))
+                
+                elif cmd == 'fail':
+                  if fullmsg.split(' ')[1] == RAM.readTab('irc_name'):
+                    sent_command = ' '.join(fullmsg.split(' ')[2:])
+                    RAM.writeTab('failed_msg', sent_command)
+                    RAM.writeTab('failed_rqst', True)
 
           ircListeningDaemon = threading.Thread(target=ircListener, args=([client]), daemon=True)
           ircListeningDaemon.start()
@@ -134,15 +142,22 @@ def start():
       if RAM.readTab('ack'):
         console.writeline('ack request answered, continuing.')
         RAM.writeTab('response', '')
+        RAM.writeTab('failed_rqst', False)
         client.send('rqst ' + RAM.readTab('user_input').split(' ')[1] + ' ' + ' '.join(RAM.readTab('user_input').split(' ')[2:]))
         timer_start = time.time()
         while timer_start - time.time() > -1:
           if '' != RAM.readTab('response'):
             console.writeline(RAM.readTab('response'))
+            break
+          
+          elif RAM.readTab('failed_rqst'):
+            console.writeline('request failed: ' + RAM.readTab('failed_msg'))
+            break
 
       else:
         console.writeline('ack request ignored, aborting.')
         continue
+      console.writeline('')
 
 
 
