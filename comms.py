@@ -12,7 +12,7 @@ def parsecmd(msg):
 
 def encode_file(file):
   msg_proc = file.encode('ascii')
-  msg_proc = base64.encode(msg_proc)
+  msg_proc = base64.b64encode(msg_proc)
   msg_proc = msg_proc.decode('ascii')
   return msg_proc
 
