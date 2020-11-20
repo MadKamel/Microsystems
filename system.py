@@ -8,6 +8,7 @@ HRAM.writeTab('host_name', 'micro1337')
 HRAM.writeTab('system_active', True)
 HRAM.writeTab('crash', False)
 HRAM.writeTab('system_restart', False)
+HRAM.writeTab('server', False)
 
 def start():
   console.clear()
@@ -98,6 +99,14 @@ def start():
                       rqst_data = ' '.join(fullmsg.split(' ')[2:])
                       if rqst_data == 'ack':
                         client.send('give ' + user + ' ack')
+                      elif rqst_data.split(' ')[0] == 'get':
+                        if HRAM.readTab('server'):
+                          try:
+                            client.send('give ' + user + ' file ' + rqst_data.split(' ')[1] + ' ' + comms.encode_file('public/' + rqst_data.split(' ')[1]))
+                          except:
+                            client.send('fail ' + user + ' 1:OBJECT_NOT_RECOGNIZED')
+                        else:
+                          client.send('fail ' + user + ' 2:SERVICE_CLOSED')
                       else:
                         client.send('fail ' + user + ' 0:RQST_NOT_RECOGNIZED')
                 
@@ -131,6 +140,13 @@ def start():
     if RAM.readTab('user_input') == 'restart':
       HRAM.writeTab('system_restart', True)
       HRAM.writeTab('system_active', False)
+
+    elif RAM.readTab('user_input') == 'mk-serveron':
+      if RAM.readTab('user_is_sudo'):
+        HRAM.writeTab('server', True)
+        console.writeline('server mode enabled.')
+      else:
+        console.writeline('\nyou are not a super-user.')
 
     elif RAM.readTab('user_input') == 'mk-ping':
       RAM.writeTab('ponged', '')
