@@ -1,2 +1,2 @@
-(<class 'IndexError'>, IndexError('list index out of range'), <traceback object at 0x7fdaa6ae6e00>)
-[<FrameSummary file /home/runner/Microsystems/system.py, line 74 in ircListener>, <FrameSummary file /home/runner/Microsystems/comms.py, line 7 in parsecmd>]
+(<class 'IndexError'>, IndexError('list index out of range'), <traceback object at 0x7f4781418340>)
+[<FrameSummary file main.py, line 8 in <module>>, <FrameSummary file /home/runner/Microsystems/system.py, line 195 in start>, <FrameSummary file /home/runner/Microsystems/exec.py, line 8 in runFile>]

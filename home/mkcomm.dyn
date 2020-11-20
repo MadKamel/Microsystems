@@ -8,3 +8,7 @@
      -[target] is the service you want to connect to.
      -[filename] is the file you want to request.
     This command requests a service for a file.
+
+Public file services usually have a 'sitemap' file.
+Try requesting one from an open service.
+
