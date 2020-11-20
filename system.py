@@ -200,7 +200,7 @@ def start():
     elif RAM.readTab('user_input') == 'inbox':
       inbox = open(HROM.readTab('inbox_dest') + RAM.readTab('user_name') + '.inb').read().split('\n')
       for i in range(len(inbox)):
-        console.writeline(inbox[i] + '\n')
+        console.writeline(inbox[i])
 
     elif RAM.readTab('user_input') == 'clearinbox':
       open(HROM.readTab('inbox_dest') + RAM.readTab('user_name') + '.inb', 'w+').write('')
