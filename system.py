@@ -62,8 +62,8 @@ def start():
             console.writeline('')
 
           client = irc.IRC()
-          RAM.writeTab('irc_name', RAM.readTab('user_name') + '-' + HRAM.readTab('host_name'), "A Microsystems User")
-          client.connect(HROM.readTab('server'), HROM.readTab('channel'), RAM.readTab('irc_name'))
+          RAM.writeTab('irc_name', RAM.readTab('user_name') + '-' + HRAM.readTab('host_name'))
+          client.connect(HROM.readTab('server'), HROM.readTab('channel'), RAM.readTab('irc_name'),  "A Microsystems User")
           console.writeline('starting IRC listening daemon...')
           
           def ircListener(client):
@@ -92,6 +92,14 @@ def start():
                         RAM.writeTab('response', sent_command)
                         if sent_command.split(' ')[0] == 'file':
                           comms.decode_file(sent_command.split(' ')[1], ' '.join(sent_command.split(' ')[2:]))
+
+                  elif cmd == 'rqst':
+                    if fullmsg.split(' ')[1] == RAM.readTab('irc_name'):
+                      rqst_data = ' '.join(fullmsg.split(' ')[2:])
+                      if rqst_data == 'ack':
+                        client.send('give ' + user + ' ack')
+                      else:
+                        client.send('fail ' + user + ' 0:RQST_NOT_RECOGNIZED')
                 
                   elif cmd == 'fail':
                     if fullmsg.split(' ')[1] == RAM.readTab('irc_name'):
