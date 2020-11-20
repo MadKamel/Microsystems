@@ -12,13 +12,13 @@ class IRC:
   def send(self, msg):
     self.irc.send(("PRIVMSG " + self.chan + " :" + msg + "\n").encode('utf-8'))
 
-  def connect(self, server, channel, botnick):
+  def connect(self, server, channel, botnick, realname):
     self.chan = channel
     print("connecting to: " + server)
     self.irc.connect((server, 6667))
     print("connection complete.")
 
-    self.irc.send(("USER " + botnick + " " + botnick + " " + botnick + " :(MadKamel) Irkbot\n").encode('utf-8'))
+    self.irc.send(("USER " + botnick + " " + botnick + " " + botnick + " :" + realname + "\n").encode('utf-8'))
     self.irc.send(("NICK " + botnick + "\n").encode('utf-8'))
     self.irc.send(("JOIN " + channel + "\n").encode('utf-8'))
     print("IRC.connect() finished.")

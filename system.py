@@ -62,7 +62,7 @@ def start():
             console.writeline('')
 
           client = irc.IRC()
-          RAM.writeTab('irc_name', RAM.readTab('user_name') + '-' + HRAM.readTab('host_name'))
+          RAM.writeTab('irc_name', RAM.readTab('user_name') + '-' + HRAM.readTab('host_name'), "A Microsystems User")
           client.connect(HROM.readTab('server'), HROM.readTab('channel'), RAM.readTab('irc_name'))
           console.writeline('starting IRC listening daemon...')
           
