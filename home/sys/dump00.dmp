@@ -1,2 +1,2 @@
-(<class 'AttributeError'>, AttributeError("'bytes' object has no attribute 'decodea'"), <traceback object at 0x7fb015a2aac0>)
-[<FrameSummary file /home/runner/Microsystems/system.py, line 95 in ircListener>, <FrameSummary file /home/runner/Microsystems/comms.py, line 20 in decode_file>]
+(<class 'IndexError'>, IndexError('list index out of range'), <traceback object at 0x7fdaa6ae6e00>)
+[<FrameSummary file /home/runner/Microsystems/system.py, line 74 in ircListener>, <FrameSummary file /home/runner/Microsystems/comms.py, line 7 in parsecmd>]

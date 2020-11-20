@@ -1,4 +1,10 @@
-@MK-COMMS is an IRC-based network that connects services
-together. This allows for file transfers and a simple
-message sharing system. Here are some basics to help get
-you started on MK-COMMS:
+@MK-COMMS is an IRC-based network that connects services together. This allows for file transfers and a simple message sharing system. Here are some basic commands to help get you started on MK-COMMS:
+
+  1. mk-ping
+    This command probes for active services. It will
+      show you every service it finds in brackets.
+
+  2. mk-rqst [target] get [filename]
+     -[target] is the service you want to connect to.
+     -[filename] is the file you want to request.
+    This command requests a service for a file.
