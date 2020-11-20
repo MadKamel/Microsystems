@@ -1,4 +1,4 @@
-import console, ram, rom, misc, filesystem, exec, error, re, irc, comms, time, threading, sys, datetime
+import console, ram, rom, misc, filesystem, exec, error, re, irc, comms, time, threading, sys
 
 HRAM = ram.ram()
 HROM = rom.rom({'user_list' : ['root'], 'pass_list' : ['toor'], 'sudo_list' : ['True'], 'dumpfile' : 'sys/dump00.dmp', 'use_regexp' : ',', 'usefile' : 'sys/users.use', 'rootdir' : filesystem.getCWD(), 'server' : 'irc.freenode.net', 'channel' : '#mk-comms', 'inbox_dest' : 'sys/inbox/'})
@@ -16,9 +16,8 @@ def start():
     console.writeline(HRAM.readTab('crash_dump'))
     if HRAM.readTab('crash_fatal'):
       misc.delay(5000)
-      console.writeline('shutting down now...')
+      console.writeline('resuming your session...')
       misc.delay(1000)
-      HRAM.writeTab('system_active', False)
     else:
       HRAM.writeTab('crash', False)
       console.writeline('your computer will resume in 5 seconds.')
@@ -82,7 +81,7 @@ def start():
                   elif cmd == 'send':
                     if fullmsg.split(' ')[1] == RAM.readTab('irc_name'):
                       sent_command = ' '.join(fullmsg.split(' ')[2:])
-                      filesystem.appendFile(HROM.readTab('inbox_dest') + RAM.readTab('user_name') + '.inb', ')[' + user + '] sent: ' + sent_command + '\n')
+                      filesystem.appendFile(HROM.readTab('inbox_dest') + RAM.readTab('user_name') + '.inb', '[' + user + '] sent: ' + sent_command + '\n')
 
                   elif cmd == 'give':
                     if fullmsg.split(' ')[1] == RAM.readTab('irc_name'):
@@ -189,6 +188,14 @@ def start():
 
     elif RAM.readTab('user_input')[:3] == 'cat':
       console.writeline('reading ' + RAM.readTab('user_input')[4:] + '...\n\n' + filesystem.readFile(RAM.readTab('user_input')[4:]) + '\n')
+    
+    elif RAM.readTab('user_input') == 'inbox':
+      inbox = open(HROM.readTab('inbox_dest') + RAM.readTab('user_name') + '.inb').read().split('\n')
+      for i in range(len(inbox)):
+        console.writeline(inbox[i] + '\n')
+
+    elif RAM.readTab('user_input') == 'clearinbox':
+      open(HROM.readTab('inbox_dest') + RAM.readTab('user_name') + '.inb', 'w+').write('')
     
     elif RAM.readTab('user_input')[:3] == 'run':
       console.writeline('running ' + RAM.readTab('user_input')[4:] + '...\n')
