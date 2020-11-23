@@ -1,7 +1,7 @@
 import console, ram, rom, misc, filesystem, exec, error, re, irc, comms, time, threading, sys
 
 HRAM = ram.ram()
-HROM = rom.rom({'user_list' : ['root'], 'pass_list' : ['toor'], 'sudo_list' : ['True'], 'dumpfile' : 'sys/dump00.dmp', 'use_regexp' : ',', 'usefile' : 'sys/users.use', 'rootdir' : filesystem.getCWD(), 'server' : 'irc.freenode.net', 'channel' : '#mk-comms', 'inbox_dest' : 'sys/inbox/'})
+HROM = rom.rom({'user_list' : ['root'], 'pass_list' : ['toor'], 'sudo_list' : ['True'], 'dumpfile' : 'sys/dump00.dmp', 'use_regexp' : ',', 'usefile' : 'sys/users.use', 'rootdir' : filesystem.getCWD(), 'server' : 'irc.freenode.net', 'channel' : '#mk-comms', 'inbox_dest' : 'sys/inbox/', 'post_dest' : 'sys/post.inb'})
 
 
 HRAM.writeTab('host_name', 'micro1337')
@@ -78,7 +78,11 @@ def start():
 
                   elif cmd == 'pong':
                     RAM.writeTab('ponged', user)
-                
+
+                  elif cmd == 'post':
+                    sent_command = ' '.join(fullmsg.split(' ')[2:])
+                    filesystem.appendFile(HROM.readTab('post_dest'), '[' + user + '] posted: ' + sent_command + '\n')
+
                   elif cmd == 'send':
                     if fullmsg.split(' ')[1] == RAM.readTab('irc_name'):
                       sent_command = ' '.join(fullmsg.split(' ')[2:])
@@ -129,6 +133,9 @@ def start():
           console.writeline('IRC listening daemon set up.')
 
           console.writeline('microsystems MK-COMMS system set up.\n')
+
+          console.writeline('note: you may need to wait before your connection is complete.')
+          console.writeline('to check if you are connected, try typing \'mk-ping\' until you get a response.\n')
         else:
           console.clear()
           console.writeline('error: invalid user.')
@@ -160,6 +167,9 @@ def start():
           RAM.writeTab('ponged', '')
 
       console.writeline('ping complete.\n')
+
+    elif RAM.readTab('user_input').split(' ')[0] == 'mk-send':
+      client.send('send ' + RAM.readTab('user_input').split(' ')[1] + ' ' + ' '.join(RAM.readTab('user_input').split(' ')[2:]))
     
     elif RAM.readTab('user_input').split(' ')[0] == 'mk-rqst':
       RAM.writeTab('ack', False)
@@ -212,6 +222,11 @@ def start():
 
     elif RAM.readTab('user_input')[:3] == 'cat':
       console.writeline('reading ' + RAM.readTab('user_input')[4:] + '...\n\n' + filesystem.readFile(RAM.readTab('user_input')[4:]) + '\n')
+
+    elif RAM.readTab('user_input') == 'posts':
+      posts = open(HROM.readTab('post_dest')).read().split('\n')
+      for i in range(len(posts)):
+        console.writeline(posts[i])
     
     elif RAM.readTab('user_input') == 'inbox':
       inbox = open(HROM.readTab('inbox_dest') + RAM.readTab('user_name') + '.inb').read().split('\n')
