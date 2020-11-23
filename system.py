@@ -232,7 +232,7 @@ def start():
         console.writeline(posts[i])
 
     elif RAM.readTab('user_input') == 'clearpost':
-      open(HROM.readTab('post_dest'), 'w+').write('') 
+      open(HROM.readTab('post_dest'), 'w+').write('')
     
     elif RAM.readTab('user_input') == 'inbox':
       inbox = open(HROM.readTab('inbox_dest') + RAM.readTab('user_name') + '.inb').read().split('\n')
