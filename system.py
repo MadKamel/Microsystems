@@ -80,7 +80,7 @@ def start():
                     RAM.writeTab('ponged', user)
 
                   elif cmd == 'post':
-                    sent_command = ' '.join(fullmsg.split(' ')[2:])
+                    sent_command = ' '.join(fullmsg.split(' ')[1:])
                     filesystem.appendFile(HROM.readTab('post_dest'), '[' + user + '] posted: ' + sent_command + '\n')
 
                   elif cmd == 'send':
@@ -170,7 +170,10 @@ def start():
 
     elif RAM.readTab('user_input').split(' ')[0] == 'mk-send':
       client.send('send ' + RAM.readTab('user_input').split(' ')[1] + ' ' + ' '.join(RAM.readTab('user_input').split(' ')[2:]))
-    
+
+    elif RAM.readTab('user_input').split(' ')[0] == 'mk-post':
+      client.send('post ' + ' '.join(RAM.readTab('user_input').split(' ')[1:]))
+
     elif RAM.readTab('user_input').split(' ')[0] == 'mk-rqst':
       RAM.writeTab('ack', False)
       client.send('rqst ' + RAM.readTab('user_input').split(' ')[1] + ' ack')
@@ -223,10 +226,13 @@ def start():
     elif RAM.readTab('user_input')[:3] == 'cat':
       console.writeline('reading ' + RAM.readTab('user_input')[4:] + '...\n\n' + filesystem.readFile(RAM.readTab('user_input')[4:]) + '\n')
 
-    elif RAM.readTab('user_input') == 'posts':
+    elif RAM.readTab('user_input') == 'post':
       posts = open(HROM.readTab('post_dest')).read().split('\n')
       for i in range(len(posts)):
         console.writeline(posts[i])
+
+    elif RAM.readTab('user_input') == 'clearpost':
+      open(HROM.readTab('post_dest'), 'w+').write('')
     
     elif RAM.readTab('user_input') == 'inbox':
       inbox = open(HROM.readTab('inbox_dest') + RAM.readTab('user_name') + '.inb').read().split('\n')
