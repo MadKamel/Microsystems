@@ -231,7 +231,7 @@ def start():
       for i in range(len(posts)):
         console.writeline(posts[i])
 
-    elif RAM.readTab('user_input') == 'clearpost':
+    elif RAM.readTab('user_input') == 'clear post':
       open(HROM.readTab('post_dest'), 'w+').write('')
     
     elif RAM.readTab('user_input') == 'inbox':
@@ -239,7 +239,7 @@ def start():
       for i in range(len(inbox)):
         console.writeline(inbox[i])
 
-    elif RAM.readTab('user_input') == 'clearinbox':
+    elif RAM.readTab('user_input') == 'clear inbox':
       open(HROM.readTab('inbox_dest') + RAM.readTab('user_name') + '.inb', 'w+').write('')
     
     elif RAM.readTab('user_input')[:3] == 'run':
