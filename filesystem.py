@@ -10,7 +10,10 @@ def getCWD():
   return os.getcwd()
 
 def readFile(file):
-  return open(file).read()
+  try:
+    return open(file).read()
+  except IOError:
+    return('[ERROR: Not a file!] This could be a directory.')
 
 def overwriteFile(file, data):
   open(file, '+w').write(data)
